@@ -1,0 +1,35 @@
+
+1- Codificare tecniche di risoluzione umane nelle regole del SAT:
+	https://www.lri.fr/~conchon/mpri/weber.pdf 
+	    fine pag 3 inizio 4
+	    
+	    usare diverso encoding  con più clause ma da soli 2 literal -> implementa cross-hatching
+	    provare encoding normale ->tecnica counting digits 1-9
+	    provare entrambi insieme
+	    tutte le strategie risolutive per Sudoku: http://www.sudokuwiki.org/Getting_Started
+	    
+	    
+	    tecnica "alternative pair exclusion"
+	    tecnica "naked pair"
+	    
+	    
+2- Confrontare performance cross-hatching e/o altro in sudoku con struttura e distribuzione diverse | sudoku propri/impropri | alto numero di starting values
+
+3- Considerare SAT incrementali  
+
+
+
+
+
+
+
+
+Links
+
+Sudoku Solver with advanced Human Strategies: 		https://pypi.python.org/pypi/sudoku-solver/0.2
+SatisPy, MiniSat Interface in Py: 			https://github.com/netom/satispy
+Simple Sat Solver in Python: 				https://github.com/stephenroller/satsolver
+C++ Sat Solver with many Heuristic Algorithms: 		https://github.com/togatoga/togasat
+sudoku risolto con sat4j, che ha interfaccia molto simile a minisat     http://www.cs.qub.ac.uk/~I.Spence/SuDoku/SuDoku.html
+sudoku difficulties and game generation			https://www.sudokuoftheday.com/about/difficulty/
+sudoklue torrent					http://dyyl1.com/sudoklue-2-0-23-f-249509.html?lang=en
