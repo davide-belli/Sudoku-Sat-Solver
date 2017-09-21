@@ -14,15 +14,15 @@ def main(argv):
     NAKED_PAIRS = False
     
     try:
-        opts, args = getopt.getopt(argv,"ho:laxc",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs"])
+        opts, args = getopt.getopt(argv,"ho:laxcp",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs"])
 
     except getopt.GetoptError:
-        print ('script.py -o <output> [-l] [-a] [-x] [-c] [-n]')
+        print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p]')
         sys.exit(2)
     
     for opt, arg in opts:
         if opt == '-h':
-            print ('script.py -o <output> [-l] [-a] [-x] [-c] [-n]')
+            print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p]')
             sys.exit()
         elif opt in ("-o", "--output"):
             output = arg
@@ -34,7 +34,7 @@ def main(argv):
             XWING = True
         elif opt in ("-c", "--crosshatching"):            
             CROSSHATCHING = True
-        elif opt in ("-n", "--nakedpairs"): 
+        elif opt in ("-p", "--nakedpairs"): 
             NAKED_PAIRS = True
             
     
@@ -206,43 +206,39 @@ def main(argv):
     #naked pairs/disjoint subset
     if NAKED_PAIRS:
         for r in range(1,10):
-            for c1 in range(1,10):
-                for c2 in range (1,10):
-                    if (c2!=c1):
-                        for d1 in range(1,10):
-                            for d2 in range(1,10):
-                                if (d1!=d2):
-                                    for c3 in range (1,10):
-                                        if (c3!=c1 and c3!=c2):
-                                            for dk in [d1,d2]:
-                                                for d3 in range (1,10):
-                                                    if (d3!=d1 and d3!=d2):
-                                                        s+=str(r)+str(c1)+str(d3)+" "
-                                                        s+=str(r)+str(c2)+str(d3)+" "
-                                                
-                                                s+=str(r)+str(c3)+str(dk)+" "
-                                                s+="0\n"
-                                                count+=1
-        
+            for c1 in range(1,9):
+                for c2 in range (c1+1,10):
+                    for d1 in range(1,9):
+                        for d2 in range(d1+1,10):
+                            for c3 in range (1,10):
+                                if (c3!=c1 and c3!=c2):
+                                    for dk in [d1,d2]:
+                                        for d3 in range (1,10):
+                                            if (d3!=d1 and d3!=d2):
+                                                s+=str(r)+str(c1)+str(d3)+" "
+                                                s+=str(r)+str(c2)+str(d3)+" "
+                                        
+                                        s+="-"+str(r)+str(c3)+str(dk)+" "
+                                        s+="0\n"
+                                        count+=1
         for c in range(1,10):
-            for r1 in range(1,10):
-                for r2 in range (1,10):
-                    if (r2!=r1):
-                        for d1 in range(1,10):
-                            for d2 in range(1,10):
-                                if (d1!=d2):
-                                    for r3 in range (1,10):
-                                        if (r3!=r1 and r3!=r2):
-                                            for dk in [d1,d2]:
-                                                for d3 in range (1,10):
-                                                    if (d3!=d1 and d3!=d2):
-                                                        s+=str(r1)+str(c)+str(d3)+" "
-                                                        s+=str(r2)+str(c)+str(d3)+" "
-                                                
-                                                s+=str(r3)+str(c)+str(dk)+" "
-                                                s+="0\n"
-                                                count+=1
-    
+            for r1 in range(1,9):
+                for r2 in range (r1+1,10):
+                    for d1 in range(1,9):
+                        for d2 in range(d1+1,10):
+                            for r3 in range (1,10):
+                                if (r3!=r1 and r3!=r2):
+                                    for dk in [d1,d2]:
+                                        for d3 in range (1,10):
+                                            if (d3!=d1 and d3!=d2):
+                                                s+=str(r1)+str(c)+str(d3)+" "
+                                                s+=str(r2)+str(c)+str(d3)+" "
+                                        
+                                        s+="-"+str(r3)+str(c)+str(dk)+" "
+                                        s+="0\n"
+                                        count+=1
+        print("naked_pairs")
+        
     if ALTERN_PAIRS:
         
         #per colonne

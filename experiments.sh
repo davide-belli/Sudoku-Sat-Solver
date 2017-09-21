@@ -1,6 +1,6 @@
 #!/bin/bash
 
-N=10
+N=4
 
 declare -a diffs=(7)
 
