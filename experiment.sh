@@ -19,18 +19,14 @@ case $key in
     N="$2"
     shift
     ;;
-    -a|--alternative_pairs)
-    strategies+='-a '
-    ;;
-    -c|--cross_hatching)
-    strategies+='-c '
-    ;;
-    -x|--xwing)
-    strategies+='-x '
+    *)
+    strategies+="$1 "
     ;;
 esac
 shift
 done
+
+echo "Strategies employed: $strategies"
 
 
 sudokus="sudokus/$D"

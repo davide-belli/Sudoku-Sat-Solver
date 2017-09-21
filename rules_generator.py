@@ -13,7 +13,7 @@ def main(argv):
     CANDIDATE_LINES = False
     
     try:
-        opts, args = getopt.getopt(argv,"ho:laxc",["output=","candidatelines", "alternativepairs", "xwing", "crosshatching"])
+        opts, args = getopt.getopt(argv,"ho:laxc",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching"])
 
     except getopt.GetoptError:
         print ('script.py -o <output> [-l] [-a] [-x] [-c]')
@@ -27,7 +27,7 @@ def main(argv):
             output = arg
         elif opt in ("-l", "--candidatelines"):
             CANDIDATE_LINES = True
-        elif opt in ("-a", "--alternativepairs"):
+        elif opt in ("-a", "--alternatepairs"):
             ALTERN_PAIRS = True
         elif opt in ("-x", "--xwing"):            
             XWING = True
@@ -66,8 +66,8 @@ def main(argv):
         for i in range(1,9):
             for j in range(i+1,10):
                 for d in range(1,10):
-                    s+="-"+str(i)+str(c)+str(d)+" -"+str(j)+str(c)+str(d)+" 0\n" 
-                    count+=1   
+                    s+="-"+str(i)+str(c)+str(d)+" -"+str(j)+str(c)+str(d)+" 0\n"
+                    count+=1
 
     print('numeri_diversi_sulla_colonna')
 
@@ -77,7 +77,7 @@ def main(argv):
             for j in range(i+1,10):
                 for d in range(1,10):
                     s+="-"+str(r)+str(i)+str(d)+" -"+str(r)+str(j)+str(d)+" 0\n"
-                    count+=1    
+                    count+=1
 
     print('numeri_diversi_sulla_riga')
 
@@ -114,66 +114,49 @@ def main(argv):
                 count += 1
     print('ogni_numero_nel_blocco')
 
-    # numeri_diversi_nel_blocco (cross-hatching)
-    if CROSSHATCHING:
-        for a in range(0,3):
-            for b in range(0,3):
-                for d in range(1,10):
-                    for x in range(0,8):
-                        for y in range(x+1,9):
-                            i=x//3+1
-                            j=x%3+1
-                            k=y//3+1
-                            l=y%3+1
-                            s+="-"+str(3*a+i)+str(3*b+j)+str(d)+" -"+str(3*a+k)+str(3*b+l)+str(d)+" 0\n"  
-                            count+=1
-        print('cross-hatching (numeri_diversi_nel_blocco)')
-
     if XWING:
         #per colonne
-        for n1 in range(1, 9):
-            for n2 in range(n1+1, 10):
-                for r1 in range(1, 9):
-                    for r2 in range(r1+1, 10):
-                        for c1 in range(1, 9):
-                            for c2 in range(c1+1, 10):
-                                for i in range(1, 10):
-                                    if i != r1 and i != r2:
-                                        for j in (c1, c2):
-                                            for n in [n1, n2]: 
-                                                for r in [r1, r2]:
-                                                    for c in [c1, c2]:
-                                                        for m in range(1, 10):
-                                                            if m!=n1 and m!=n2:                
-                                                                s+= str(r) + str(c)+str(m) + " "
-                                                
-                                                
-                                                s+="-" + str(i)+str(j)+str(n)+" 0\n"
-                                                count +=1
+        for n in range(1, 9):
+            for r1 in range(1, 9):
+                for r2 in range(r1+1, 10):
+                    for c1 in range(1, 9):
+                        for c2 in range(c1+1, 10):
+                            
+                            ip=""
+
+                            for c in range(1, 10):
+                                if c != c1 and c != c2:
+                                    for r in [r1, r2]:
+                                        ip += "-" + str(r) + str(c) + str(n) + " "
+
+                            for r in range(1, 10):
+                                if r != r1 and r != r2:
+                                    for c in [c1, c2]:
+                                        s += ip + "-" + str(r) + str(c) + str(n) + " 0\n"
+                                        count += 1
+
         #per righe
-        for n1 in range(1, 9):
-            for n2 in range(n1+1, 10):
-                for r1 in range(1, 9):
-                    for r2 in range(r1+1, 10):
-                        for c1 in range(1, 9):
-                            for c2 in range(c1+1, 10):
-                                for j in range(1, 10):
-                                    if j != c1 and j != c2:
-                                        for i in (r1, r2):
-                                            for n in [n1, n2]: 
-                                                for r in [r1, r2]:
-                                                    for c in [c1, c2]:
-                                                        for m in range(1, 10):
-                                                            if m!=n1 and m!=n2:                
-                                                                s+= str(r) + str(c)+str(m) + " "
-                                                
-                                                
-                                                s+="-" + str(i)+str(j)+str(n)+" 0\n"
-                                                count +=1                                                            
-                                                            
+        for n in range(1, 9):
+            for r1 in range(1, 9):
+                for r2 in range(r1 + 1, 10):
+                    for c1 in range(1, 9):
+                        for c2 in range(c1 + 1, 10):
+
+                            ip = ""
+                            for r in range(1, 10):
+                                if r != r1 and r != r2:
+                                    for c in [c1, c2]:
+                                        ip += "-" + str(r) + str(c) + str(n) + " "
+
+                            for c in range(1, 10):
+                                if c != c1 and c != c2:
+                                    for r in [r1, r2]:
+                                        s += ip + "-" + str(r) + str(c) + str(n) + " 0\n"
+                                        count += 1
+
         print('x-wing')
 
-    #cross-hatching
+    #cross-hatching (numeri diversi nel blocco)
     if CROSSHATCHING:
         for d in range(1, 10):
             for a in range(3):
@@ -185,6 +168,7 @@ def main(argv):
                             
                             s += '-' + str(3*a +i+1) + str(3*b+j+1) + str(d) + ' -' + str(3*a +k+1) + str(3*b+l+1) + str(d) + ' 0\n'
                             count += 1
+        print('cross-hatching')
 
                  
     #candidate lines
@@ -215,6 +199,47 @@ def main(argv):
                                 s += "0\n"
                                 count += 1
         print("candidate lines")
+    
+    if ALTERN_PAIRS:
+        
+        #per colonne
+        for n in range(1, 10):
+            for a in range(3):
+                for b in range(3):
+                    if a != b:
+                        for c in range(3):
+                            for d in range(3):
+                                if c != d:
+                                    for r1 in range(3):
+                                        for c1 in range(3):
+                                            for c2 in range(3):
+                                                for r2 in range(3):
+                                                    for r3 in range(3):
+                                                        ip = ""
+
+                                                        for x in range(1, 10):
+                                                            if x != 3 * c + c1 + 1 and x != 3 * d + c2 + 1:
+                                                                ip += "-" + str(3 * b + r1 + 1) + str(x) + str(n) + " "
+
+                                                        for x in range(1, 10):
+                                                            if x != 3 * b + r1 + 1 and x != 3 * a + r3 + 1:
+                                                                ip += "-" + str(x) + str(3*d+c2+1) + str(n) + " "
+
+                                                        for x in range(1, 10):
+                                                            if x != 3 * b + r1 + 1 and x != 3 * a + r2 + 1:
+                                                                ip += "-" + str(x) + str(3*c+c1+1) + str(n) + " "
+
+                                                        for x in range(3):
+                                                            s += ip + "-" + str(3*a+r3+1) + str(3*c+x+1) + str(n) + " 0\n"
+                                                            count += 1
+
+                                                            s += ip + "-" + str(3*a+r2+1) + str(3*d+x+1) + str(n) + " 0\n"
+                                                            count += 1
+                                        
+        
+        
+        
+        print("alternative pairs")
 
 
 
