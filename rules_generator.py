@@ -10,20 +10,23 @@ def main(argv):
     XWING = False
     CROSSHATCHING = False
     ALTERN_PAIRS = False
+    CANDIDATE_LINES = False
     
     try:
-        opts, args = getopt.getopt(argv,"ho:axc",["output=","alternativepairs", "xwing", "crosshatching"])
+        opts, args = getopt.getopt(argv,"ho:laxc",["output=","candidatelines", "alternativepairs", "xwing", "crosshatching"])
 
     except getopt.GetoptError:
-        print ('script.py -o <output> [-a] [-x] [-c]')
+        print ('script.py -o <output> [-l] [-a] [-x] [-c]')
         sys.exit(2)
     
     for opt, arg in opts:
         if opt == '-h':
-            print ('script.py -o <output> [-a] [-x] [-c]')
+            print ('script.py -o <output> [-l] [-a] [-x] [-c]')
             sys.exit()
         elif opt in ("-o", "--output"):
             output = arg
+        elif opt in ("-l", "--candidatelines"):
+            CANDIDATE_LINES = True
         elif opt in ("-a", "--alternativepairs"):
             ALTERN_PAIRS = True
         elif opt in ("-x", "--xwing"):            
@@ -79,21 +82,6 @@ def main(argv):
     print('numeri_diversi_sulla_riga')
 
 
-    #numeri_diversi_nel_blocco
-    for a in range(0,3):
-        for b in range(0,3):
-            for d in range(1,10):
-                for x in range(0,8):
-                    for y in range(x+1,9):
-                        i=x//3+1
-                        j=x%3+1
-                        k=y//3+1
-                        l=y%3+1
-                        #print(i," ",j," ",k," ",l)
-                        s+="-"+str(3*a+i)+str(3*b+j)+str(d)+" -"+str(3*a+k)+str(3*b+l)+str(d)+" 0\n"  
-                        count+=1
-    print('numeri_diversi_nel_blocco')
-
     #ogni_numero_nella_colonna
     for d in range(1,10):
         for c in range(1,10):
@@ -126,7 +114,20 @@ def main(argv):
                 count += 1
     print('ogni_numero_nel_blocco')
 
-
+    # numeri_diversi_nel_blocco (cross-hatching)
+    if CROSSHATCHING:
+        for a in range(0,3):
+            for b in range(0,3):
+                for d in range(1,10):
+                    for x in range(0,8):
+                        for y in range(x+1,9):
+                            i=x//3+1
+                            j=x%3+1
+                            k=y//3+1
+                            l=y%3+1
+                            s+="-"+str(3*a+i)+str(3*b+j)+str(d)+" -"+str(3*a+k)+str(3*b+l)+str(d)+" 0\n"  
+                            count+=1
+        print('cross-hatching (numeri_diversi_nel_blocco)')
 
     if XWING:
         #per colonne
@@ -186,8 +187,8 @@ def main(argv):
                             count += 1
 
                  
-    #alternative_pair
-    if ALTERN_PAIRS:
+    #candidate lines
+    if CANDIDATE_LINES:
         for v in range(1, 10):
             for a in range(3):
                 for b in range(3):
@@ -213,6 +214,7 @@ def main(argv):
                                             s += str(3*a +d+1) + str(3*b+c+1) + str(v) + " -" + str(3*a+r+1) + str(l) + str(v) + " "
                                 s += "0\n"
                                 count += 1
+        print("candidate lines")
 
 
 
