@@ -35,7 +35,7 @@ def main(argv):
         elif opt in ("-c", "--crosshatching"):            
             CROSSHATCHING = True
         elif opt in ("-n", "--nakedpairs"): 
-            NAKED_PAIRS = TRUE
+            NAKED_PAIRS = True
             
     
     s=""

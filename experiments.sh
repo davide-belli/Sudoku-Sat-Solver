@@ -9,7 +9,7 @@ do
 echo $D 
 ./experiment.sh -n $N -d $D
 #./experiment.sh -n 0 -d $D -l
-./experiment.sh -n 0 -d $D -x
+./experiment.sh -n 0 -d $D --nakedpairs
 ./experiment.sh -n 0 -d $D -l -c
-./experiment.sh -n 0 -d $D -l -c -x
+./experiment.sh -n 0 -d $D -l -c --nakedpairs
 done
