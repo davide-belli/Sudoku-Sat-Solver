@@ -273,8 +273,8 @@ def main(argv):
         print("naked_pairs")
         
     if ALTERN_PAIRS:
-        
-        #per colonne
+    
+        # per colonne
         for n in range(1, 10):
             for a in range(3):
                 for b in range(3):
@@ -288,29 +288,60 @@ def main(argv):
                                                 for r2 in range(3):
                                                     for r3 in range(3):
                                                         ip = ""
-
+                                                    
                                                         for x in range(1, 10):
                                                             if x != 3 * c + c1 + 1 and x != 3 * d + c2 + 1:
                                                                 ip += "-" + str(3 * b + r1 + 1) + str(x) + str(n) + " "
-
+                                                    
                                                         for x in range(1, 10):
                                                             if x != 3 * b + r1 + 1 and x != 3 * a + r3 + 1:
-                                                                ip += "-" + str(x) + str(3*d+c2+1) + str(n) + " "
-
+                                                                ip += "-" + str(x) + str(3 * d + c2 + 1) + str(n) + " "
+                                                    
                                                         for x in range(1, 10):
                                                             if x != 3 * b + r1 + 1 and x != 3 * a + r2 + 1:
-                                                                ip += "-" + str(x) + str(3*c+c1+1) + str(n) + " "
-
+                                                                ip += "-" + str(x) + str(3 * c + c1 + 1) + str(n) + " "
+                                                    
                                                         for x in range(3):
-                                                            s += ip + "-" + str(3*a+r3+1) + str(3*c+x+1) + str(n) + " 0\n"
+                                                            s += ip + "-" + str(3 * a + r3 + 1) + str(3 * c + x + 1) + str(n) + " 0\n"
                                                             count += 1
+                                                        
+                                                            s += ip + "-" + str(3 * a + r2 + 1) + str(3 * d + x + 1) + str(n) + " 0\n"
+                                                            count += 1
+                
+                # per righe
+                for n in range(1, 10):
+                    for a in range(3):
+                        for b in range(3):
+                            if a != b:
+                                for c in range(3):
+                                    for d in range(3):
+                                        if c != d:
+                                            for r1 in range(3):
+                                                for c1 in range(3):
+                                                    for c2 in range(3):
+                                                        for r2 in range(3):
+                                                            for r3 in range(3):
+                                                                ip = ""
+                                                
+                                                                for x in range(1, 10):
+                                                                    if x != 3 * c + c1 + 1 and x != 3 * d + c2 + 1:
+                                                                        ip += "-" + str(3 * b + r1 + 1) + str(x) + str(n) + " "
+                                                
+                                                                for x in range(1, 10):
+                                                                    if x != 3 * b + r1 + 1 and x != 3 * a + r3 + 1:
+                                                                        ip += "-" + str(x) + str(3 * d + c2 + 1) + str(n) + " "
+                                                
+                                                                for x in range(1, 10):
+                                                                    if x != 3 * b + r1 + 1 and x != 3 * a + r2 + 1:
+                                                                        ip += "-" + str(x) + str(3 * c + c1 + 1) + str(n) + " "
+                                                
+                                                                for x in range(3):
+                                                                    s += ip + "-" + str(3 * a + r3 + 1) + str(3 * c + x + 1) + str(n) + " 0\n"
+                                                                    count += 1
+                                                    
+                                                                    s += ip + "-" + str(3 * a + r2 + 1) + str(3 * d + x + 1) + str(n) + " 0\n"
+                                                                    count += 1
 
-                                                            s += ip + "-" + str(3*a+r2+1) + str(3*d+x+1) + str(n) + " 0\n"
-                                                            count += 1
-                                        
-        
-        
-        
         print("alternative pairs")
 
 

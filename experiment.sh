@@ -39,7 +39,7 @@ sudokus="sudokus/$D"
 rules="sudokus/rules.cnf"
 
 
-mkdir -p $sudokus
+mkdir -p "$sudokus/statistics/"
 
 
 python web-scraper.py -o $sudokus -d $D -n $N
@@ -69,3 +69,5 @@ do
     python decode.py -i "$sudokus/${id}_sol.txt" -o "$sudokus/${id}_sol.csv"
 
 done
+
+python single_statistics.py -d "$sudokus" -o "$sudokus/statistics"
