@@ -12,17 +12,18 @@ def main(argv):
     ALTERN_PAIRS = False
     CANDIDATE_LINES = False
     NAKED_PAIRS = False
+    SINGLE_BOX = False
     
     try:
-        opts, args = getopt.getopt(argv,"ho:laxcp",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs"])
+        opts, args = getopt.getopt(argv,"ho:laxcpb",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs", "singlebox"])
 
     except getopt.GetoptError:
-        print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p]')
+        print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p] [-b]')
         sys.exit(2)
     
     for opt, arg in opts:
         if opt == '-h':
-            print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p]')
+            print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p] [-b]')
             sys.exit()
         elif opt in ("-o", "--output"):
             output = arg
@@ -36,6 +37,8 @@ def main(argv):
             CROSSHATCHING = True
         elif opt in ("-p", "--nakedpairs"): 
             NAKED_PAIRS = True
+        elif opt in ("-b", "--singlebox"): 
+            SINGLE_BOX = True
             
     
     s=""
@@ -61,7 +64,7 @@ def main(argv):
                 for k in range(d+1,10):
                     s+="-"+str(i)+str(j)+str(d)+" -"+str(i)+str(j)+str(k)+" 0\n"    
                     count+=1
-
+                    
     print('al_massimo_un_numero_per_cella')
 
     #numeri_diversi_sulla_colonna
@@ -158,6 +161,36 @@ def main(argv):
                                         count += 1
 
         print('x-wing')
+
+    #Single Box
+    if SINGLE_BOX:
+        for d in range(1,10):
+            for a in range(0,3):
+                for b in range(0,3):
+                    for r in range (3*a+1,3*a+4):
+                        for r2 in range (3*a+1,3*a+4):
+                            if r2!=r:
+                                for c2 in range(3*b+1,3*b+4):
+                                    for c in range(1,10):
+                                        if c!= 3*b+1 and c!= 3*b+2 and c!= 3*b+3:
+                                            s+=str(r)+str(c)+str(d)+" "
+                                    s+="-"+str(r2)+str(c2)+str(d)+" "
+                                    s+="0\n"
+                                    count+=1  
+        for d in range(1,10):
+            for a in range(0,3):
+                for b in range(0,3):
+                    for c in range (3*a+1,3*a+4):
+                        for c2 in range (3*a+1,3*a+4):
+                            if c2!=c:
+                                for r2 in range(3*b+1,3*b+4):
+                                    for r in range(1,10):
+                                        if r!= 3*b+1 and r!= 3*b+2 and r!= 3*b+3:
+                                            s+=str(r)+str(c)+str(d)+" "
+                                    s+="-"+str(r2)+str(c2)+str(d)+" "
+                                    s+="0\n"
+                                    count+=1   
+        print('single-box')
 
     #cross-hatching (numeri diversi nel blocco)
     if CROSSHATCHING:
