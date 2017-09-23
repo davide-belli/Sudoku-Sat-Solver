@@ -41,45 +41,50 @@ def main(argv):
     
     infos = []
     
-    for file in os.listdir(directory):
-        id = filenameregex.match(file)
-        if id != None:
-            
-            id = id[1]
-            
-            print(id)
-            
-            logs = ""
-            with open(os.path.join(directory, file), 'r') as f:
-                logs = f.read()
-                f.close()
-                
-            cases = logs.split('Strategies: ')[1:]
-            
-            for c in cases:
-                strat = c.split('\n')[0].replace(" ", "")
-                #print('\ts: ' + strat)
-                
-                fields = fieldsregex.findall(c)
-                
-                for field, val in fields:
-                    #print("\t\t" + str(field))
+    for d in range(1, 10):
+        dir = os.path.join(directory, str(d))
+        if os.path.isdir(dir):
+            for file in os.listdir(dir):
+                id = filenameregex.match(file)
+                if id != None:
                     
-                    infos.append([id, strat, field, float(val)])
+                    id = id[1]
+                    
+                    print(id)
+                    
+                    logs = ""
+                    with open(os.path.join(dir, file), 'r') as f:
+                        logs = f.read()
+                        f.close()
+                        
+                    cases = logs.split('Strategies: ')[1:]
+                    
+                    for c in cases:
+                        strat = c.split('\n')[0].replace(" ", "")
+                        #print('\ts: ' + strat)
+                        
+                        fields = fieldsregex.findall(c)
+                        
+                        for field, val in fields:
+                            #print("\t\t" + str(field))
+                            
+                            infos.append([d, id, strat, field, float(val)])
 
-    infos = pd.DataFrame(infos, columns=['id', 'strategy', 'field', 'value'])
+
+    infos = pd.DataFrame(infos, columns=['difficulty', 'id', 'strategy', 'field', 'value'])
     
-    infos.sort_values(by=["field", "strategy", "id"], inplace=True)
+    infos.sort_values(by=["field", "strategy", "difficulty", "id"], inplace=True)
 
     infos.strategy.replace("", "none", inplace=True)
     
     
     
     for f in infos['field'].unique():
-        ax = sns.swarmplot(x="strategy", y="value", hue="id", data=infos[infos.field == f], palette="Paired")
-        ax.legend_.remove()
+        ax = sns.swarmplot(x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
+        #ax.legend_.remove()
         plt.title(f)
         plt.savefig(os.path.join(outdir, f+'.png'))
+        plt.close()
             
 
 if __name__ == "__main__":
