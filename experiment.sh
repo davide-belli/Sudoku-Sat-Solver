@@ -4,6 +4,8 @@ D=5
 
 N=15
 
+Sat4j=false
+
 strategies="" #-a -x -c
 
 while [[ $# -gt 0 ]]
@@ -18,6 +20,9 @@ case $key in
     -n|--number)
     N="$2"
     shift
+    ;;
+    -4|--sat4j)
+    Sat4j=true
     ;;
     *)
     strategies+="$1 "
@@ -50,11 +55,14 @@ do
     ./rules_merger.sh $rules $s > "$sudokus/${id}_merged.cnf"
 
     printf "Strategies: $strategies \n\n" >> "$sudokus/${id}_log.txt"
-    #./MiniSat_v1.14_linux "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
-    #minisat -pre "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
-
-    > "$sudokus/${id}_sol.txt"
-    sat4j "$sudokus/${id}_merged.cnf" | ./split.sh "$sudokus/${id}_sol.txt" "$sudokus/${id}_log.txt"
+        
+    if $Sat4j ; then
+        > "$sudokus/${id}_sol.txt"
+        sat4j "$sudokus/${id}_merged.cnf" | ./split.sh "$sudokus/${id}_sol.txt" "$sudokus/${id}_log.txt"
+    else
+        #./MiniSat_v1.14_linux "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
+        minisat -pre "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
+    fi
     
     printf "\n\n" >> "$sudokus/${id}_log.txt"
     
