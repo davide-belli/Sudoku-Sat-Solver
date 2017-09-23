@@ -61,7 +61,7 @@ do
         sat4j "$sudokus/${id}_merged.cnf" | ./split.sh "$sudokus/${id}_sol.txt" "$sudokus/${id}_log.txt"
     else
         #./MiniSat_v1.14_linux "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
-        minisat -pre "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
+        minisat -pre -rnd-freq=0 "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
     fi
 
     > "$sudokus/${id}_merged.cnf"
