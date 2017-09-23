@@ -63,7 +63,9 @@ do
         #./MiniSat_v1.14_linux "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
         minisat -pre "$sudokus/${id}_merged.cnf" "$sudokus/${id}_sol.txt" >> "$sudokus/${id}_log.txt"
     fi
-    
+
+    > "$sudokus/${id}_merged.cnf"
+
     printf "\n\n" >> "$sudokus/${id}_log.txt"
     
     python decode.py -i "$sudokus/${id}_sol.txt" -o "$sudokus/${id}_sol.csv"
