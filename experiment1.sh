@@ -10,4 +10,6 @@ echo $D
 ./experiment.sh -n $N -d $D
 done
 
+mkdir -p ./sudokus/statistics
+
 python statistics.py -d ./sudokus -o ./sudokus/statistics

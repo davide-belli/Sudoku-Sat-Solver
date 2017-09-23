@@ -72,4 +72,5 @@ do
 
 done
 
+
 python single_statistics.py -d "$sudokus" -o "$sudokus/statistics"
