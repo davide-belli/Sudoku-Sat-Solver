@@ -49,7 +49,8 @@ def main(argv):
     sudoku = np.zeros((9, 9), dtype='int')
 
     for r, c, d in trues:
-        sudoku[int(r)-1, int(c)-1] = int(d)
+        if int(r) > 0 and int(c) > 0:
+            sudoku[int(r)-1, int(c)-1] = int(d)
         
     for r, c, d in falses:
         if sudoku[int(r)-1, int(c)-1] == str(d):

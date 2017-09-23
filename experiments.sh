@@ -2,7 +2,7 @@
 
 N=20
 
-declare -a diffs=(2 3 4 5 6 8 9)
+declare -a diffs=(7) #(2 3 4 5 6 8 9)
 
 for D in ${diffs[@]}
 do

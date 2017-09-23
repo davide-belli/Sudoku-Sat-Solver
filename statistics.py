@@ -50,7 +50,7 @@ def main(argv):
                     
                     id = id[1]
                     
-                    print(id)
+                    #print(id)
                     
                     logs = ""
                     with open(os.path.join(dir, file), 'r') as f:
@@ -76,14 +76,27 @@ def main(argv):
     infos.sort_values(by=["field", "strategy", "difficulty", "id"], inplace=True)
 
     infos.strategy.replace("", "none", inplace=True)
-    
-    
-    
+
+    sns.palplot(sns.color_palette("bright", 20))
+
     for f in infos['field'].unique():
-        ax = sns.swarmplot(x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
-        #ax.legend_.remove()
+        print('Plotting ' + f)
+        fig, ax = plt.subplots(figsize=(20, 8))
+    
+        sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f], dodge=True)
+        # ax.legend_.remove()
         plt.title(f)
-        plt.savefig(os.path.join(outdir, f+'.png'))
+        plt.savefig(os.path.join(outdir, f + '.png'))
+        plt.close()
+
+    for f in infos['field'].unique():
+        print('Plotting ' + f)
+        fig, ax = plt.subplots(figsize=(20, 8))
+    
+        sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
+        # ax.legend_.remove()
+        plt.title(f)
+        plt.savefig(os.path.join(outdir, f + '_2.png'))
         plt.close()
             
 
