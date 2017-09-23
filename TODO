@@ -10,12 +10,19 @@
 
 
 SC (if not in any other cell of row/column/box then is in that cell)   	DEFAULT RULE
-SB (Single Block)														! TOTYPE
+SB (Single Block)														DONE
 CH (diverse righe, diverse colonne->diverso blocco)						DONE	
 CL Candidate Lines 														DONE
 DS (Disjoint Subset - Naked Pairs/Triplets/...)							DONE
 	HP = NP + extra numbers
 DC (Disjoint Chain)														NOT TO DO
 XW																		DONE
-NS Nishio (backtrack on cells with 2 candidates)						NOT TO DO
 			
+
+TODO List:
+-Compare Sat Solvers
+-Formulate hypothesis
+-Define Metrics
+-Run tests + Gather statistics
+-Analyze and Plot
+-Lesson Learnt
