@@ -56,7 +56,7 @@ def main(argv):
         if sudoku[int(r)-1, int(c)-1] == str(d):
             print("ERROR! At " + r+ ", " + c+ " value " + d+ " conflict!")
 
-    print(sudoku)   
+    #print(sudoku)
 
     np.savetxt(outfile, sudoku.astype(int), fmt='%i', delimiter=',')
 

@@ -1,15 +1,24 @@
 #!/bin/bash
 
-N=100
+N=0
 
-declare -a diffs=(1 2 3 4 5 6 7 8 9)
+difficulty=""
+
+while [[ $# -gt 0 ]]
+do
+difficulty+="$1 "
+shift
+done
+
+
+diffs=($difficulty)
 
 for D in ${diffs[@]}
 do
 echo $D
 ./experiment.sh -n 0 -d $D -b
-./experiment.sh -n 0 -d $D -l 
-./experiment.sh -n 0 -d $D -c  
+./experiment.sh -n 0 -d $D -l
+./experiment.sh -n 0 -d $D -c
 ./experiment.sh -n 0 -d $D -p
 ./experiment.sh -n 0 -d $D -x
 ./experiment.sh -n 0 -d $D -a

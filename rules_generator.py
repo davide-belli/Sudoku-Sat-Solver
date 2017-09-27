@@ -13,20 +13,23 @@ def main(argv):
     CANDIDATE_LINES = False
     NAKED_PAIRS = False
     SINGLE_BOX = False
+    SIMPLE = False
     
     try:
-        opts, args = getopt.getopt(argv,"ho:laxcpb",["output=","candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs", "singlebox"])
+        opts, args = getopt.getopt(argv,"ho:slaxcpb",["output=", "simple", "candidatelines", "alternatepairs", "xwing", "crosshatching", "nakedpairs", "singlebox"])
 
     except getopt.GetoptError:
-        print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p] [-b]')
+        print ('script.py -o <output> [-s] [-l] [-a] [-x] [-c] [-p] [-b]')
         sys.exit(2)
     
     for opt, arg in opts:
         if opt == '-h':
-            print ('script.py -o <output> [-l] [-a] [-x] [-c] [-p] [-b]')
+            print ('script.py -o <output> [-s] [-l] [-a] [-x] [-c] [-p] [-b]')
             sys.exit()
         elif opt in ("-o", "--output"):
             output = arg
+        elif opt in ("-s", "--simple"):
+            SIMPLE = True
         elif opt in ("-l", "--candidatelines"):
             CANDIDATE_LINES = True
         elif opt in ("-a", "--alternatepairs"):
@@ -46,79 +49,80 @@ def main(argv):
     var=9*9*9
 
 
-    #almeno_un_numero_per_cella
-    for i in range(1,10):
-        for j in range(1,10):
-            for d in range(1,10):
-                s+=str(i)+str(j)+str(d)+" "
-            s+="0\n"
-            count+=1
-
-
-    print('almeno_un_numero_per_cella')
-
-    #al_massimo_un_numero_per_cella
-    for i in range(1,10):
-        for j in range(1,10):
-            for d in range(1,9):
-                for k in range(d+1,10):
-                    s+="-"+str(i)+str(j)+str(d)+" -"+str(i)+str(j)+str(k)+" 0\n"    
-                    count+=1
-                    
-    print('al_massimo_un_numero_per_cella')
-
-    #numeri_diversi_sulla_colonna
-    for c in range(1,10):
-        for i in range(1,9):
-            for j in range(i+1,10):
+    if SIMPLE:
+        #almeno_un_numero_per_cella
+        for i in range(1,10):
+            for j in range(1,10):
                 for d in range(1,10):
-                    s+="-"+str(i)+str(c)+str(d)+" -"+str(j)+str(c)+str(d)+" 0\n"
-                    count+=1
-
-    print('numeri_diversi_sulla_colonna')
-
-    #numeri_diversi_sulla_riga
-    for r in range(1,10):
-        for i in range(1,9):
-            for j in range(i+1,10):
-                for d in range(1,10):
-                    s+="-"+str(r)+str(i)+str(d)+" -"+str(r)+str(j)+str(d)+" 0\n"
-                    count+=1
-
-    print('numeri_diversi_sulla_riga')
-
-
-    #ogni_numero_nella_colonna
-    for d in range(1,10):
-        for c in range(1,10):
-            for r in range(1,10):
-                s+=str(r)+str(c)+str(d)+" "
-            s+="0\n"
-            count+=1
-
-    print('ogni_numero_nella_colonna')
-
-    #ogni_numero_nella_riga
-    for d in range(1,10):
-        for r in range(1,10):
-            for c in range(1,10):
-                s+=str(r)+str(c)+str(d)+" "
-            s+="0\n"
-            count+=1
-
-    print('ogni_numero_nella_riga')
-
-    #ogni_numero_nel_blocco
-    for d in range(1, 10):
-        for a in range(3):
-            for b in range(3):
-                for x in range(3):
-                    for y in range(3):
-                        s += str(3*a +x+1) + str(3*b+y+1) + str(d) + " "
+                    s+=str(i)+str(j)+str(d)+" "
+                s+="0\n"
+                count+=1
+    
+    
+        print('almeno_un_numero_per_cella')
+    
+        #al_massimo_un_numero_per_cella
+        for i in range(1,10):
+            for j in range(1,10):
+                for d in range(1,9):
+                    for k in range(d+1,10):
+                        s+="-"+str(i)+str(j)+str(d)+" -"+str(i)+str(j)+str(k)+" 0\n"
+                        count+=1
                         
-                s += "0\n"
-                count += 1
-    print('ogni_numero_nel_blocco')
+        print('al_massimo_un_numero_per_cella')
+    
+        #numeri_diversi_sulla_colonna
+        for c in range(1,10):
+            for i in range(1,9):
+                for j in range(i+1,10):
+                    for d in range(1,10):
+                        s+="-"+str(i)+str(c)+str(d)+" -"+str(j)+str(c)+str(d)+" 0\n"
+                        count+=1
+    
+        print('numeri_diversi_sulla_colonna')
+    
+        #numeri_diversi_sulla_riga
+        for r in range(1,10):
+            for i in range(1,9):
+                for j in range(i+1,10):
+                    for d in range(1,10):
+                        s+="-"+str(r)+str(i)+str(d)+" -"+str(r)+str(j)+str(d)+" 0\n"
+                        count+=1
+    
+        print('numeri_diversi_sulla_riga')
+    
+    
+        #ogni_numero_nella_colonna
+        for d in range(1,10):
+            for c in range(1,10):
+                for r in range(1,10):
+                    s+=str(r)+str(c)+str(d)+" "
+                s+="0\n"
+                count+=1
+    
+        print('ogni_numero_nella_colonna')
+    
+        #ogni_numero_nella_riga
+        for d in range(1,10):
+            for r in range(1,10):
+                for c in range(1,10):
+                    s+=str(r)+str(c)+str(d)+" "
+                s+="0\n"
+                count+=1
+    
+        print('ogni_numero_nella_riga')
+    
+        #ogni_numero_nel_blocco
+        for d in range(1, 10):
+            for a in range(3):
+                for b in range(3):
+                    for x in range(3):
+                        for y in range(3):
+                            s += str(3*a +x+1) + str(3*b+y+1) + str(d) + " "
+                            
+                    s += "0\n"
+                    count += 1
+        print('ogni_numero_nel_blocco')
 
     if XWING:
         #per colonne

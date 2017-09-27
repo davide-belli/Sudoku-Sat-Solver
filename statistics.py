@@ -44,6 +44,7 @@ def main(argv):
     for d in range(1, 10):
         dir = os.path.join(directory, str(d))
         if os.path.isdir(dir):
+            print('Difficulty ' + str(d))
             for file in os.listdir(dir):
                 id = filenameregex.match(file)
                 if id != None:
@@ -89,15 +90,15 @@ def main(argv):
         plt.savefig(os.path.join(outdir, f + '.png'))
         plt.close()
 
-    for f in infos['field'].unique():
-        print('Plotting ' + f)
-        fig, ax = plt.subplots(figsize=(20, 8))
-    
-        sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
-        # ax.legend_.remove()
-        plt.title(f)
-        plt.savefig(os.path.join(outdir, f + '_2.png'))
-        plt.close()
+    # for f in infos['field'].unique():
+    #     print('Plotting ' + f)
+    #     fig, ax = plt.subplots(figsize=(20, 8))
+    #
+    #     sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
+    #     # ax.legend_.remove()
+    #     plt.title(f)
+    #     plt.savefig(os.path.join(outdir, f + '_2.png'))
+    #     plt.close()
             
 
 if __name__ == "__main__":
