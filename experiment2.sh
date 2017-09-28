@@ -16,7 +16,7 @@ diffs=($difficulty)
 for D in ${diffs[@]}
 do
 echo $D
-./experiment.sh -n 0 -d $D -b
+#./experiment.sh -n 0 -d $D -b
 ./experiment.sh -n 0 -d $D -l
 ./experiment.sh -n 0 -d $D -c
 ./experiment.sh -n 0 -d $D -p

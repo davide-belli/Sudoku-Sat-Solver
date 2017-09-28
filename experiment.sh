@@ -6,7 +6,7 @@ N=15
 
 Sat4j=false
 
-strategies="" #-a -x -c
+strategies="-s " #-a -x -c
 
 while [[ $# -gt 0 ]]
 do
