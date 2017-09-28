@@ -8,7 +8,9 @@ for f in "$@"; do
     if [ -f "$f" ]
         then
             merge+="$(cat "$f")"
-            #merge+=$'\n'
+            if [ "${filename: -1}" != $'\n' ]; then
+                merge+=$'\n'
+            fi
             #(>&2 printf "$f ")
         else (>&2 echo "$f" is not a "file")
     fi

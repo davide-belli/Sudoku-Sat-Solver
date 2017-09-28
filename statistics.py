@@ -64,6 +64,8 @@ def main(argv):
                         strat = c.split('\n')[0].replace(" ", "")
                         #print('\ts: ' + strat)
                         
+                        strat.replace("-b", "")
+                        
                         fields = fieldsregex.findall(c)
                         
                         for field, val in fields:
@@ -75,7 +77,8 @@ def main(argv):
     infos = pd.DataFrame(infos, columns=['difficulty', 'id', 'strategy', 'field', 'value'])
     
     infos.sort_values(by=["field", "strategy", "difficulty", "id"], inplace=True)
-
+    
+    
     infos.strategy.replace("", "none", inplace=True)
 
     sns.palplot(sns.color_palette("bright", 20))
