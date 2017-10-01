@@ -16,12 +16,15 @@ diffs=($difficulty)
 for D in ${diffs[@]}
 do
 echo $D
-#./experiment.sh -n 0 -d $D -b
-./experiment.sh -n 0 -d $D -l
-./experiment.sh -n 0 -d $D -c
-./experiment.sh -n 0 -d $D -p
-./experiment.sh -n 0 -d $D -x
-./experiment.sh -n 0 -d $D -a
+./experiment.sh -n 0 -d $D -b -l -x
+./experiment.sh -n 0 -d $D -b -c -x
+./experiment.sh -n 0 -d $D -b -c -l -x
+./experiment.sh -n 0 -d $D -b -c -l -p
+./experiment.sh -n 0 -d $D -c -l -x
+./experiment.sh -n 0 -d $D -c -p
+./experiment.sh -n 0 -d $D -c -x
+./experiment.sh -n 0 -d $D -l -p
+./experiment.sh -n 0 -d $D -l -x
 done
 
 mkdir -p ./sudokus/statistics

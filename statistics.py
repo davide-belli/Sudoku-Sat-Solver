@@ -61,47 +61,56 @@ def main(argv):
                     cases = logs.split('Strategies: ')[1:]
                     
                     for c in cases:
-                        strat = c.split('\n')[0].replace(" ", "")
-                        #print('\ts: ' + strat)
+                        strat = c.split('\n')[0]
+                        strat = strat.replace(" ", "")
+                        strat = strat.replace("-", "")
+                        strat = strat.replace("s", "")
                         
-                        strat.replace("-b", "")
+                        strat=''.join(sorted(strat))
+                        
                         
                         fields = fieldsregex.findall(c)
                         
-                        for field, val in fields:
-                            #print("\t\t" + str(field))
+                        if len(fields) > 1:
+                            row = {'difficulty': d, 'id' : id, 'strategy' : strat}
                             
-                            infos.append([d, id, strat, field, float(val)])
+                            for field, val in fields:
+                                row[field] = float(val)
+                                
+                            infos.append(row)
 
+    
+    
+    infos = pd.DataFrame(infos)
 
-    infos = pd.DataFrame(infos, columns=['difficulty', 'id', 'strategy', 'field', 'value'])
-    
-    infos.sort_values(by=["field", "strategy", "difficulty", "id"], inplace=True)
-    
-    
+    l1 = len(infos)
+    infos = infos.groupby(['strategy', 'difficulty', 'id']).first().reset_index()
+    l2 = len(infos)
+    if l2 < l1:
+        print("ATTENTION! DUPLICATE ENTRIES! " + str((l1, l2, l1 - l2)))
+
     infos.strategy.replace("", "none", inplace=True)
-
-    sns.palplot(sns.color_palette("bright", 20))
-
-    for f in infos['field'].unique():
-        print('Plotting ' + f)
-        fig, ax = plt.subplots(figsize=(20, 8))
+    infos.sort_values(by=['strategy', 'difficulty', 'id'], inplace=True)
     
-        sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f], dodge=True)
-        # ax.legend_.remove()
+    infos['propagation_per_decision'] = infos['propagations'] / infos['decisions']
+    infos['conflicts_per_decision'] = infos['conflicts'] / infos['decisions']
+
+    print(infos[(np.isfinite(infos['propagation_per_decision'])) & infos['propagation_per_decision'].notnull()]['propagation_per_decision'].describe())
+    print(infos[(np.isfinite(infos['conflicts_per_decision'])) & infos['conflicts_per_decision'].notnull()]['conflicts_per_decision'].describe())
+    
+    sns.palplot(sns.color_palette("bright", 20))
+    
+    print(infos.columns.values)
+
+    for f in (set(infos.columns.values) - set(['difficulty', 'id', 'strategy'])):
+        print('Plotting ' + f)
+        fig, ax = plt.subplots(figsize=(40, 8))
+
+        sns.swarmplot(ax=ax, x="strategy", y=f, hue="difficulty", size=1.4, data=infos, dodge=True)
         plt.title(f)
-        plt.savefig(os.path.join(outdir, f + '.png'))
+        plt.savefig(os.path.join(outdir, f + '.png'), dpi=200)
         plt.close()
 
-    # for f in infos['field'].unique():
-    #     print('Plotting ' + f)
-    #     fig, ax = plt.subplots(figsize=(20, 8))
-    #
-    #     sns.swarmplot(ax=ax, x="strategy", y="value", hue="difficulty", data=infos[infos.field == f])
-    #     # ax.legend_.remove()
-    #     plt.title(f)
-    #     plt.savefig(os.path.join(outdir, f + '_2.png'))
-    #     plt.close()
             
 
 if __name__ == "__main__":
